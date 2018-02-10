@@ -2,3 +2,8 @@ logging:
   level:
     org.springframework: DEBUG
     org.springframework.web.servlet: DEBUG
+
+basic:
+  value: true
+  message: Welcome to basic YAML config!
+  number: 100
