@@ -2,6 +2,7 @@ package com.freesoft.springboot.web.controllers;
 
 import static org.junit.Assert.assertTrue;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.freesoft.springboot.web.Application;
@@ -31,8 +33,16 @@ public class SuveyControllerIntegrationTest {
 	TestRestTemplate restTemplate = new TestRestTemplate();
 	HttpHeaders httpHeaders = new HttpHeaders();
 
+	private String createHttpAuthenticationHeaderValue(String username, String password) {
+		String authInfo = username + ":" + password;
+		byte[] encodedAuth = Base64.encode(authInfo.getBytes(Charset.forName("US-ASCII")));
+		String headerValue = "Basic " + new String(encodedAuth);
+		return headerValue;
+	}
+
 	@Before
 	public void aPriori() {
+		httpHeaders.add("Authorization", createHttpAuthenticationHeaderValue("user1", "userpassword"));
 		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	}
 
