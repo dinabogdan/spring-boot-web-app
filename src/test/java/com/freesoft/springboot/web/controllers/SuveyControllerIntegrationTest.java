@@ -62,7 +62,6 @@ public class SuveyControllerIntegrationTest {
 		String URL = createURLWithPort(RETRIEVE_ALL_QUESTIONS_URL);
 		Question q1 = new Question("QuestionXX", "Largest Country in the World", "Russia",
 				Arrays.asList("India", "Russia", "United States", "China"));
-
 		HttpEntity<Question> entity = new HttpEntity<>(q1, httpHeaders);
 		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
 		String actual = response.getHeaders().get(HttpHeaders.LOCATION).get(0);
